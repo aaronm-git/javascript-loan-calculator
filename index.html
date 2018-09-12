@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bootstrap Loan Calculator</title>
+
+</head>
+
+<body>
+  <div class="container">
+    <!-- Content here -->
+    <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input class="form-control" type="date" name="startDate" id="" required>
+          </div>
+          <div class="row form-group">
+            <div class="col">
+              <label for="loanAmount">Loan Amount</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input class="form-control" type="number" name="loanAmount" id="" value="0" required>
+              </div>
+            </div>
+  
+            <div class="col">
+              <label for="interestRate">Interest Rate</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">%</div>
+                </div>
+                <input class="form-control" type="number" name="interestRate" id="" value="0" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="interval">Installment Interval</label>
+            <select class="form-control" name="interval" id="" required>
+              <option value="" selected disabled>Choose...</option>
+              <option value="daily">Daily</option>
+              <option value="daily">Monthly</option>
+              <option value="daily">Yearly</option>
+            </select>
+          </div>
+          <!-- 
+          <div class="form-group">
+            <label for="start date">Start Date</label>
+            <input class="form-control" type="date" name="startDate" id="">
+          </div> -->
+          <button type="submit" class="btn btn-block btn-success">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-5">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Outstanding Balance</th>
+                <th scope="col">Scheduled Payment</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Ending Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>8/12/2018</td>
+                <td>$1000</td>
+                <td>$400</td>
+                <td>1.5%</td>
+                <td>$600</td>
+              </tr>
+            </tbody>
+          </table>
+  
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./resources/css/main.css">
+  <script src="./resources/js/bootstrap.min.js"></script>
+  <script src="./resources/js/main.js"></script>
+</body>
+
+</html>
