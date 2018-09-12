@@ -13,11 +13,11 @@
   <div class="container">
     <!-- Content here -->
     <div class="row">
-      <div class="col-md-6">
-        <form>
+      <div class="col-md-8">
+        <form id="calculator-form">
           <div class="form-group">
             <label for="startDate">Start Date</label>
-            <input class="form-control" type="date" name="startDate" id="" required>
+            <input class="form-control" type="date" name="startDate" id="startDate" required>
           </div>
           <div class="row form-group">
             <div class="col">
@@ -26,7 +26,7 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text">$</div>
                 </div>
-                <input class="form-control" type="number" name="loanAmount" id="" value="0" required>
+                <input class="form-control" min="0" step=".01" type="number" name="loanAmount" id="loanAmount" value="0" required>
               </div>
             </div>
   
@@ -36,17 +36,28 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text">%</div>
                 </div>
-                <input class="form-control" type="number" name="interestRate" id="" value="0" required>
+                <input class="form-control" min="0" step=".01" type="number" name="interestRate" id="interestRate" value="0" required>
               </div>
             </div>
+
+            <div class="col">
+                <label for="installmentsNum"># Installments</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">#</div>
+                  </div>
+                  <input class="form-control" type="number" name="installmentsNum" id="installmentsNum" value="0" required min="0" step="1">
+                </div>
+              </div>
           </div>
+
           <div class="form-group">
-            <label for="interval">Installment Interval</label>
-            <select class="form-control" name="interval" id="" required>
+            <label for="selectedInterval">Installment Interval</label>
+            <select class="form-control" name="selectedInterval" id="selectedInterval" required>
               <option value="" selected disabled>Choose...</option>
               <option value="daily">Daily</option>
-              <option value="daily">Monthly</option>
-              <option value="daily">Yearly</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
             </select>
           </div>
           <!-- 
@@ -59,7 +70,7 @@
       </div>
     </div>
     <div class="row mt-5">
-        <table class="table">
+        <table class="table" id="result-table">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -71,17 +82,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>8/12/2018</td>
-                <td>$1000</td>
-                <td>$400</td>
-                <td>1.5%</td>
-                <td>$600</td>
-              </tr>
             </tbody>
           </table>
-  
     </div>
   </div>
   <!-- Bootstrap core JavaScript
@@ -89,7 +91,12 @@
   <!-- Placed at the end of the document so the pages load faster -->
   <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
   <link rel="stylesheet" href="./resources/css/main.css">
+  <script src="./resources/js/jquery-3.3.1.min.js"></script>
   <script src="./resources/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script>
+      moment().format();
+  </script>
   <script src="./resources/js/main.js"></script>
 </body>
 
