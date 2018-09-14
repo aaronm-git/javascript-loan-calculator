@@ -14,9 +14,11 @@ $(document).ready(function () {
         var installmentsNum = $('#installmentsNum').val();
 
         if (interestRate > 0) {
-            var addToTotal = currency(loanAmount).multiply(interestRate);                
-            loanAmount == addToTotal + loanAmount;
+            var interest = currency(loanAmount).multiply(interestRate);
+            loanAmount = currency(loanAmount).add(interest);
         }
+
+        var scheduledPayment = currency(loanAmount).distribute(installmentsNum);
 
         for (var i = 1; i <= installmentsNum; i++) {
             newDate = new Date(startDate);
@@ -33,8 +35,6 @@ $(document).ready(function () {
             var y = newDate.getFullYear();
             var newDate = mm + '/' + dd + '/' + y;
 
-            var scheduledPayment = currency(loanAmount).distribute(installmentsNum);
-
             var currentBalance = loanAmount - (currency(scheduledPayment[i - 1] * i) - scheduledPayment[i - 1]);
             var newEndingBalance = loanAmount - (currency(scheduledPayment[i - 1]).multiply(i));
 
@@ -44,10 +44,10 @@ $(document).ready(function () {
                 .append(
                     '<tr><td scope="row">' + i + '</td>' +
                     '<td>' + newDate + '</td>' +
-                    '<td>$' + currentBalance.toFixed(2) + '</td>' +
+                    '<td>$' + currentBalance + '</td>' +
                     '<td>$' + scheduledPayment[i - 1] + '</td>' +
                     '<td>' + interestRate + '%</td>' +
-                    '<td>$' + newEndingBalance.toFixed(2) + '</td>' +
+                    '<td>$' + newEndingBalance + '</td>' +
                     '</tr>');
         }
     });
