@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#calculator-form").on('submit', function (e) {
         e.preventDefault();
 
+        $('table tbody tr').each(function () {
+                $(this).remove();
+        })
+
         //code here
         var startDate = $('#startDate').val();
         var loanAmount = $('#loanAmount').val();
@@ -9,17 +13,18 @@ $(document).ready(function () {
         var selectedInterval = $('#selectedInterval').val();
         var installmentsNum = $('#installmentsNum').val();
 
+        if (interestRate > 0) {
+            var addToTotal = currency(loanAmount).multiply(interestRate);                
+            loanAmount == addToTotal + loanAmount;
+        }
+
         for (var i = 1; i <= installmentsNum; i++) {
             newDate = new Date(startDate);
             if (selectedInterval == 'daily') {
                 newDate.setDate(newDate.getDate() + i);
-            }
-
-            else if (selectedInterval == 'weekly') {
+            } else if (selectedInterval == 'weekly') {
                 newDate.setDate(newDate.getDate() + (i * 7));
-            }
-
-            else if (selectedInterval == 'monthly') {
+            } else if (selectedInterval == 'monthly') {
                 newDate.setMonth(newDate.getMonth() + i);
             }
 
@@ -29,12 +34,9 @@ $(document).ready(function () {
             var newDate = mm + '/' + dd + '/' + y;
 
             var scheduledPayment = currency(loanAmount).distribute(installmentsNum);
-            if (interestRate != 0){
-                scheduledPayment[i-1] = currency(scheduledPayment[i-1]).add(currency(scheduledPayment[i-1]).multiply(interestRate));
-            }
 
-            var currentBalance = loanAmount - (currency(scheduledPayment[i-1]*i)-scheduledPayment[i-1]);
-            var newEndingBalance = loanAmount - (currency(scheduledPayment[i-1]).multiply(i));
+            var currentBalance = loanAmount - (currency(scheduledPayment[i - 1] * i) - scheduledPayment[i - 1]);
+            var newEndingBalance = loanAmount - (currency(scheduledPayment[i - 1]).multiply(i));
 
             // var currentBalance = currency(loanAmount).subtract(currency(currency(scheduledPayment[i-1]).multiply(i)).add(scheduledPayment[i-1]));
             // var newEndingBalance = currency(loanAmount).subtract(currency(scheduledPayment[i-1]).multiply(i));
@@ -43,7 +45,7 @@ $(document).ready(function () {
                     '<tr><td scope="row">' + i + '</td>' +
                     '<td>' + newDate + '</td>' +
                     '<td>$' + currentBalance.toFixed(2) + '</td>' +
-                    '<td>$' + scheduledPayment[i-1] + '</td>' +
+                    '<td>$' + scheduledPayment[i - 1] + '</td>' +
                     '<td>' + interestRate + '%</td>' +
                     '<td>$' + newEndingBalance.toFixed(2) + '</td>' +
                     '</tr>');
