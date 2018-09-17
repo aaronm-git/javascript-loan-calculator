@@ -20,6 +20,9 @@ $(document).ready(function () {
 
         var scheduledPayment = currency(loanAmount).distribute(installmentsNum);
 
+        var currentBalance = [];
+        var newEndingBalance = [];
+
         for (var i = 1; i <= installmentsNum; i++) {
             newDate = new Date(startDate);
             if (selectedInterval == 'daily') {
@@ -35,19 +38,32 @@ $(document).ready(function () {
             var y = newDate.getFullYear();
             var newDate = mm + '/' + dd + '/' + y;
 
-            var currentBalance = loanAmount - (currency(scheduledPayment[i - 1] * i) - scheduledPayment[i - 1]);
-            var newEndingBalance = loanAmount - (currency(scheduledPayment[i - 1]).multiply(i));
+            var thisCurrentBalance = currency(loanAmount)
+            .subtract(currency(currency(scheduledPayment[i - 1])
+            .multiply(i))
+            .subtract(scheduledPayment[i - 1]));
+
+            var thisNewEndingBalance = currency(loanAmount).subtract(currency(scheduledPayment[i - 1]).multiply(i));
+
+            currentBalance.push(thisCurrentBalance);
+            newEndingBalance.push(thisNewEndingBalance);
+
+            if (newEndingBalance[installmentsNum-1] > 0) {
+                scheduledPayment[installmentsNum-1] = currency(scheduledPayment[installmentsNum-1]).add(newEndingBalance[installmentsNum-1]);
+                
+                newEndingBalance[installmentsNum-1] = 0.00;
+            }
 
             // var currentBalance = currency(loanAmount).subtract(currency(currency(scheduledPayment[i-1]).multiply(i)).add(scheduledPayment[i-1]));
             // var newEndingBalance = currency(loanAmount).subtract(currency(scheduledPayment[i-1]).multiply(i));
             $("#result-table tbody:last-child")
                 .append(
-                    '<tr><td scope="row">' + i + '</td>' +
+                    '<tr><th scope="row">' + i + '</th>' +
                     '<td>' + newDate + '</td>' +
-                    '<td>$' + currentBalance + '</td>' +
+                    '<td>$' + currentBalance[i - 1] + '</td>' +
                     '<td>$' + scheduledPayment[i - 1] + '</td>' +
                     '<td>' + interestRate + '%</td>' +
-                    '<td>$' + newEndingBalance + '</td>' +
+                    '<td>$' + newEndingBalance[i - 1] + '</td>' +
                     '</tr>');
         }
     });
