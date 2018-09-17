@@ -50,8 +50,7 @@ $(document).ready(function () {
 
             if (newEndingBalance[installmentsNum-1] > 0) {
                 scheduledPayment[installmentsNum-1] = currency(scheduledPayment[installmentsNum-1]).add(newEndingBalance[installmentsNum-1]);
-                
-                newEndingBalance[installmentsNum-1] = 0.00;
+                newEndingBalance[installmentsNum-1] = currency(currentBalance[installmentsNum-1]).subtract(scheduledPayment[installmentsNum-1]);
             }
 
             // var currentBalance = currency(loanAmount).subtract(currency(currency(scheduledPayment[i-1]).multiply(i)).add(scheduledPayment[i-1]));
